@@ -22,8 +22,8 @@ document.addEventListener("DOMContentLoaded", () => {
     bookmarkList.innerHTML = "";
     const bookmarks = getData(userId) || [];
 
-    console.log("Loading bookmarks for user:", userId);  // Debugging log
-    console.log("Loaded bookmarks:", bookmarks);  // Debugging log
+    console.log("Loading bookmarks for user:", userId);
+    console.log("Loaded bookmarks:", bookmarks);
 
     if (bookmarks.length === 0) {
       bookmarkList.innerHTML = "<p>No bookmarks found.</p>";
@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     bookmarks.reverse().forEach((bookmark, index) => {
-      console.log(`Rendering bookmark ${index + 1}:`, bookmark);  // Debugging log
+      console.log(`Rendering bookmark ${index + 1}:`, bookmark);
       if (!bookmark.url || !bookmark.title || !bookmark.timestamp) {
         console.error("Invalid bookmark:", bookmark);
         return;
@@ -43,11 +43,11 @@ document.addEventListener("DOMContentLoaded", () => {
       link.textContent = bookmark.title;
       link.target = "_blank";
       listItem.appendChild(link);
-      
+
       // Ensure timestamp exists and is valid before formatting
       const timestamp = bookmark.timestamp ? new Date(bookmark.timestamp).toLocaleString() : "Invalid Date";
       listItem.innerHTML += ` - ${bookmark.description} (Added on: ${timestamp})`;
-      
+
       bookmarkList.appendChild(listItem);
     });
   }
@@ -61,34 +61,39 @@ document.addEventListener("DOMContentLoaded", () => {
     const userId = userSelect.value;
     if (!userId) return;
 
-    // Log the form inputs to check if they are being populated
     console.log("Form values:", {
       url: urlInput.value,
       title: titleInput.value,
       description: descriptionInput.value,
     });
 
-    // Validate form inputs before creating bookmark
     if (!urlInput.value || !titleInput.value || !descriptionInput.value) {
       console.error("Missing fields in the form.");
       return;
     }
 
-    // Create a bookmark object with properties
     const newBookmark = {
       url: urlInput.value,
       title: titleInput.value,
       description: descriptionInput.value,
-      timestamp: Date.now(), // Ensure this is a valid timestamp
+      timestamp: Date.now(),
     };
 
-    console.log("Adding new bookmark:", newBookmark);  // Debugging log
+    console.log("Adding new bookmark:", newBookmark);
 
     const bookmarks = getData(userId) || [];
-    bookmarks.push(newBookmark);  // Add the new bookmark to the array
-    setData(userId, bookmarks);   // Store the updated bookmarks array back to localStorage
-    loadBookmarks(userId);        // Reload bookmarks
-    bookmarkForm.reset();         // Reset form inputs
+    bookmarks.push(newBookmark);
+    setData(userId, bookmarks);
+    loadBookmarks(userId);
+    bookmarkForm.reset();
+  });
+
+  // Enable Enter key submission from the textarea
+  descriptionInput.addEventListener("keydown", function (event) {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      bookmarkForm.requestSubmit();
+    }
   });
 
   // Load initial bookmarks for the first user
@@ -97,3 +102,4 @@ document.addEventListener("DOMContentLoaded", () => {
     loadBookmarks(users[0]);
   }
 });
+
