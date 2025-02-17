@@ -1,0 +1,25 @@
+{
+  "name": "shared-bookmarks",
+  "version": "1.0.0",
+  "description": "",
+  "main": "test.js",
+  "type": "module",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leiliheidarishizari/Shared-Bookmarks.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leiliheidarishizari/Shared-Bookmarks/issues"
+  },
+  "homepage": "https://github.com/leiliheidarishizari/Shared-Bookmarks#readme",
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0"
+  }
+}
